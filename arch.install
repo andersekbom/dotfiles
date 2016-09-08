@@ -1,0 +1,99 @@
+# Check for UEFI or BIOS
+efivar -l
+ls /sys/firmware/efi/efivars
+
+lsblk / fdisk -l
+
+parted /dev/sda
+
+mklabel msdos
+
+mkpart primary ext4 1MiB 100MiB
+set 1 boot on
+mkpart primary ext4 100MiB 7GiB
+mkpart primary linux-swap 7GiB 8GiB
+mkpart primary ext4 8GiB 100%
+
+mkfs.ext4 /dev/sda1
+mkfs.ext4 /dev/sda2
+mkswap /dev/sda3
+mkfs.ext4 /dev/sda4
+
+swapon /dev/sda3
+
+mount /dev/sda2 /mnt
+mkdir -p /mnt/boot
+mount /dev/sda1 /mnt/boot
+mkdir -p /mnt/home
+mount /dev/sda4 /mnt/home
+
+wifi-menu
+ip addr
+ping www.google.com
+
+pacstrap -i /mnt base base-devel
+
+genfstab -U /mnt > /mnt/etc/fstab
+
+arch-chroot /mnt /bin/bash
+
+nano /etc/locale.gen
+locale-gen
+echo LANG=en_US.UTF-8 > /etc/locale.conf
+
+timedatectl set-ntp true
+ln -sf /usr/share/zoneinfo/CET /etc/localtime
+hwclock --systohc --utc
+
+
+mkinitcpio -p linux
+
+pacman -S grub os-prober
+
+grub-install --recheck /dev/sda
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+echo x61s > /etc/hostname
+
+nano /etc/hosts
+
+ip addr
+
+systemctl enable dhcpcd@[interface].service
+
+pacman -S iw wpa wpa_supplicant
+pacman -S dialog
+
+passwd
+
+exit
+
+umount -R /mnt
+
+reboot
+
+======================
+
+loadkeys sv-latin1
+
+i3
+Firefox
+Deluge
+feh
+San fransisco fonts
+Moka icons
+
+thunar
+glances
+gpointing-device-settings
+
+# Add sudo group
+groupadd sudo
+
+# Add sudo group to sudoers file
+echo "%sudo ALL=(ALL) ALL" >> /etc/sudoers
+
+# Add real user
+useradd -m -g users -G sudo,docker lilleman
+

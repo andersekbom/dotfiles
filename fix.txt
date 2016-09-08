@@ -1,0 +1,3 @@
+.Xsession in your home directory add the line "exec i3"
+
+startx
