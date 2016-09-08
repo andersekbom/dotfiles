@@ -1,5 +1,7 @@
 # Prepare media
-# dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx status=progress && sync
+# sudo dd if=win98usb.img of=/dev/sdb conv=notrunc
+# dd bs=4M if=/path/to/archlinux.iso of=/dev/sdb status=progress && sync
+
 
 loadkeys sv-latin1
 
