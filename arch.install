@@ -1,3 +1,8 @@
+# Prepare media
+# dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx status=progress && sync
+
+loadkeys sv-latin1
+
 # Check for UEFI or BIOS
 efivar -l
 ls /sys/firmware/efi/efivars
@@ -72,6 +77,17 @@ exit
 umount -R /mnt
 
 reboot
+
+useradd -m -G wheel -s /bin/bash anders
+passwd anders
+
+nano /etc/sudoers # wheel
+
+sudo pacman -Syu
+
+sudo pacman -S xorg-server xorg-server-utils
+
+
 
 ======================
 
