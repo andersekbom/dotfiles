@@ -61,6 +61,7 @@ pacstrap /mnt \
  pulseaudio pulseaudio-alsa \ # Audio stuff
  firefox \
  wget \
+ noto-fonts \ # Nice monospace fonts for terminals
  # docker
 # networkmanager \
 # networkmanager-openvpn \
@@ -93,11 +94,11 @@ echo x61s > /etc/hostname
 
 nano /etc/hosts
 
-ip addr
+ip link
+pacman -S wpa_actiond iw wpa_supplicant dialog 
 
-systemctl enable dhcpcd@[interface].service
-
-pacman -S iw wpa_supplicant dialog
+systemctl enable netctl-auto@[interface].service
+systemctl start netctl-auto@[interface].service
 
 passwd
 
@@ -117,7 +118,6 @@ sudo pacman -Syu
 sudo pacman -S xorg-server xorg-server-utils
 sudo pacman -S gdm
 
-
 ======================
 
 loadkeys sv-latin1
@@ -128,8 +128,8 @@ Deluge
 feh
 San fransisco fonts
 Moka icons
-
 thunar
 glances
 gpointing-device-settings
+
 exec --no-startup-id "setxkbmap -model pc105 -layout se"
