@@ -61,6 +61,7 @@ pacstrap /mnt \
  pulseaudio pulseaudio-alsa \ # Audio stuff
  firefox \
  wget \
+noto-fonts
  # docker
 # networkmanager \
 # networkmanager-openvpn \
